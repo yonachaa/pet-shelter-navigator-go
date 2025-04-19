@@ -37,11 +37,11 @@ const ShelterCard: React.FC<ShelterCardProps> = ({
   const getStatusText = () => {
     switch (status) {
       case "approved":
-        return "승인됨";
-      case "rejected":
-        return "거부됨";
+        return "Approved";
+      case "Rejected":
+        return "rejected";
       default:
-        return "대기 중";
+        return ";
     }
   };
 
@@ -60,12 +60,12 @@ const ShelterCard: React.FC<ShelterCardProps> = ({
         <div className="flex items-center justify-between mb-3">
           <div className="text-xs">
             <span className="font-medium text-emergency-dark">
-              수용 가능: {capacity.available}/{capacity.total}
+              Capacity: {capacity.available}/{capacity.total}
             </span>
           </div>
           {petFriendly && (
             <Badge variant="outline" className="text-xs border-emergency-primary text-emergency-primary">
-              반려동물 허용
+              Pet Friendly
             </Badge>
           )}
         </div>
