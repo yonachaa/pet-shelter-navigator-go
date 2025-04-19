@@ -64,7 +64,7 @@ const ShelterCard: React.FC<ShelterCardProps> = ({
           </div>
           {petFriendly && (
             <Badge variant="outline" className="text-xs border-emergency-primary text-emergency-primary">
-              Pet friendly
+              Pet
             </Badge>
           )}
         </div>
