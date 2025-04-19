@@ -40,8 +40,7 @@ const ShelterCard: React.FC<ShelterCardProps> = ({
         return "Approved";
       case "Rejected":
         return "rejected";
-      default:
-        return ";
+      
     }
   };
 
@@ -65,7 +64,7 @@ const ShelterCard: React.FC<ShelterCardProps> = ({
           </div>
           {petFriendly && (
             <Badge variant="outline" className="text-xs border-emergency-primary text-emergency-primary">
-              Pet Friendly
+              Pet f
             </Badge>
           )}
         </div>
