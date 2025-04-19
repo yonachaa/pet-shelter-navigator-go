@@ -18,39 +18,37 @@ const Index = () => {
 
   // Mock data
   const petData = {
-    name: "멍이",
-    breed: "골든 리트리버",
+    name: "Buddy",
+    breed: "Golden Retriever",
     age: 3,
-    specialNeeds: "알레르기가 있습니다",
+    specialNeeds: "Has allergies",
   };
 
   const shelterData = {
-    name: "성동구 재난 대피소",
-    address: "서울 성동구 왕십리로 83",
+    name: "Downtown Emergency Shelter",
+    address: "83 Main Street, Downtown",
     capacity: {
       total: 120,
       available: 43,
     },
     petFriendly: true,
     status: "approved",
-    facilities: ["의료 지원", "식수", "전기", "반려동물 공간", "샤워 시설"],
+    facilities: ["Medical Aid", "Water", "Power", "Pet Area", "Showers"],
   };
 
-  // Simulate shelter approval after 3 seconds
   useEffect(() => {
     if (isEmergencyMode && !isApproved) {
       const timer = setTimeout(() => {
         setIsApproved(true);
         toast({
-          title: "대피소 승인 완료!",
-          description: "성동구 재난 대피소로 이동해 주세요.",
+          title: "Shelter Approved!",
+          description: "Please proceed to Downtown Emergency Shelter",
         });
       }, 3000);
       return () => clearTimeout(timer);
     }
   }, [isEmergencyMode, isApproved, toast]);
 
-  // Generate new verification code
   const refreshCode = () => {
     const newCode = Math.random()
       .toString(36)
@@ -60,35 +58,26 @@ const Index = () => {
       .substring(0, 8);
     setVerificationCode(newCode);
     toast({
-      title: "인증 코드가 갱신되었습니다",
-      description: "새 코드가 발급되었습니다",
+      title: "Code Updated",
+      description: "New verification code has been generated",
     });
   };
 
-  // Start navigation
   const startNavigation = () => {
-    // In a real app, this would use the Google Maps URL scheme
-    // window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(shelterData.address)}&travelmode=driving`;
+    const address = encodeURIComponent(shelterData.address);
+    window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode=driving`;
     
     toast({
-      title: "길 안내가 시작됩니다",
-      description: "Google 지도 앱으로 이동합니다",
+      title: "Navigation Started",
+      description: "Google Maps navigation is starting",
     });
-    
-    // For demo purposes just show a toast
-    setTimeout(() => {
-      toast({
-        title: "길 안내 중",
-        description: "약 15분 후 도착 예정입니다",
-      });
-    }, 2000);
   };
 
   const startEmergencyMode = () => {
     setIsEmergencyMode(true);
     toast({
-      title: "비상 모드가 활성화되었습니다",
-      description: "인근 대피소를 찾는 중...",
+      title: "Emergency Mode Activated",
+      description: "Searching for nearby shelters...",
     });
   };
 
@@ -114,17 +103,17 @@ const Index = () => {
               <path d="M12 17h.01" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-emergency-dark mb-2">
-            재난 대피 지원 서비스
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            Emergency Evacuation Service
           </h2>
           <p className="text-gray-500 mb-8 max-w-xs">
-            재난 상황에서 반려동물과 함께 안전하게 대피할 수 있도록 도와드립니다
+            We help you and your pet safely evacuate during emergencies
           </p>
           <Button
             onClick={startEmergencyMode}
             className="bg-emergency-danger hover:bg-emergency-danger/90 text-white rounded-full h-12 px-8 w-full max-w-xs emergency-shadow-hover transition-all"
           >
-            비상 모드 활성화
+            Activate Emergency Mode
           </Button>
         </div>
       ) : (
@@ -132,9 +121,9 @@ const Index = () => {
           {!isApproved && (
             <Alert className="mb-6 border-emergency-warning bg-emergency-warning/10 text-emergency-warning">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>대피소 승인 대기 중</AlertTitle>
+              <AlertTitle>Awaiting Shelter Approval</AlertTitle>
               <AlertDescription>
-                인근 대피소에서 승인을 기다리고 있습니다. 잠시만 기다려주세요.
+                Please wait while we confirm your shelter assignment.
               </AlertDescription>
             </Alert>
           )}
@@ -143,8 +132,8 @@ const Index = () => {
           
           <EmergencyMap
             shelterName={shelterData.name}
-            distance="2.3km"
-            eta="15분"
+            distance="1.4 miles"
+            eta="15 min"
             onStartNavigation={startNavigation}
             isApproved={isApproved}
           />
@@ -153,7 +142,7 @@ const Index = () => {
           
           <VerificationCode
             code={verificationCode}
-            expiresIn="30분"
+            expiresIn="30 min"
             onRefresh={refreshCode}
           />
         </>
