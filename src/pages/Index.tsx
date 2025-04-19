@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import Layout from "@/components/Layout";
 import PetProfile from "@/components/PetProfile";
-import EmergencyMap from "@/components/EmergencyMap";
+import { EmergencyMap } from "@/components/EmergencyMap";
 import ShelterCard from "@/components/ShelterCard";
 import VerificationCode from "@/components/VerificationCode";
 import { Button } from "@/components/ui/button";
