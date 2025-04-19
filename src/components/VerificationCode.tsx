@@ -71,7 +71,7 @@ const VerificationCode: React.FC<VerificationCodeProps> = ({
           </Button>
         </div>
         <p className="text-xs text-gray-500 mt-2">
-          도착 시 이 코드와 함께 반려동물 정보를 제시하면 빠르게 입장할 수 있습니다
+          Show this code with your pet’s information upon arrival for quick entry.
         </p>
       </CardContent>
     </Card>
