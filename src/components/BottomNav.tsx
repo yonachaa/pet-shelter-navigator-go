@@ -22,10 +22,10 @@ const BottomNav = () => {
             <Link
               key={item.label}
               to={item.path}
-              className={`flex flex-col items-center space-y-1 transition-colors ${
+              className={`flex flex-col items-center space-y-1 transition-all ${
                 isActive 
-                ? "text-sky-500" 
-                : "text-gray-500 hover:text-gray-700"
+                ? "text-sky-500 scale-110" 
+                : "text-gray-400 hover:text-gray-600"
               }`}
             >
               <item.icon className="h-5 w-5" />

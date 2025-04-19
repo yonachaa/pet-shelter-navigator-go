@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                 Woof
               </span>
-              <div className="ml-2 h-2 w-2 rounded-full bg-green-400 animate-pulse-slow"></div>
+              <div className="ml-2 h-2 w-2 rounded-full bg-green-400 animate-pulse"></div>
             </h1>
             <div className="flex items-center space-x-2">
               <div className="text-xs font-medium py-1 px-3 bg-white/80 text-sky-600 rounded-full shadow-sm border border-sky-100/50">
