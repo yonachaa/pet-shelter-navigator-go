@@ -20,8 +20,8 @@ const VerificationCode: React.FC<VerificationCodeProps> = ({
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
     toast({
-      title: "코드가 복사되었습니다",
-      description: "입장 시 직원에게 보여주세요",
+      title: "Code Copied",
+      description: "Show this code to staff",
     });
   };
 
@@ -29,8 +29,8 @@ const VerificationCode: React.FC<VerificationCodeProps> = ({
     <Card className="mb-6 emergency-shadow border-none">
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-medium text-emergency-dark">개인 인증 코드</h3>
-          <span className="text-xs text-gray-500">{expiresIn} 후 만료</span>
+          <h3 className="font-medium text-emergency-dark">Authorization Code</h3>
+          <span className="text-xs text-gray-500">{expiresIn} Expiring Soon</span>
         </div>
         <div className="flex items-center space-x-2 mt-2">
           <div className="flex-1 bg-emergency-primary/5 rounded-lg p-3 text-center">
@@ -44,7 +44,7 @@ const VerificationCode: React.FC<VerificationCodeProps> = ({
             onClick={handleCopy}
             className="border-emergency-primary text-emergency-primary hover:bg-emergency-primary/5"
           >
-            복사
+            Copy
           </Button>
           <Button 
             variant="ghost" 
