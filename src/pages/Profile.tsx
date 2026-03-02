@@ -19,25 +19,27 @@ const Profile = () => {
   if (view === "account") {
     return (
       <Layout>
-        <div className="space-y-4">
-          <Button variant="ghost" onClick={() => setView("main")} className="pl-0 font-bold">
-            <ArrowLeft className="h-4 w-4 mr-1" /> Back
+        <div className="space-y-3.5">
+          <Button variant="ghost" onClick={() => setView("main")} className="pl-0 font-semibold text-[15px] h-10 active:scale-95 transition-transform">
+            <ArrowLeft className="h-4 w-4 mr-1.5" /> Back
           </Button>
-          <h2 className="text-xl font-bold text-foreground">Account Settings</h2>
+          <h2 className="text-[20px] font-bold text-foreground tracking-tight">Account Settings</h2>
           
-          <Card className="border-border shadow-sm">
+          <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
             <CardContent className="p-4">
-              <h3 className="font-bold text-foreground mb-1">Pet Documents</h3>
-              <p className="text-xs text-muted-foreground mb-4">Pre-approved documents for emergency shelters</p>
-              <div className="space-y-3">
+              <h3 className="font-semibold text-[15px] text-foreground mb-0.5">Pet Documents</h3>
+              <p className="text-[12px] text-muted-foreground mb-3.5">Pre-approved for emergency shelters</p>
+              <div className="space-y-2">
                 {documents.map((doc, i) => (
-                  <div key={i} className="flex items-center space-x-3 p-3 bg-secondary rounded-xl">
-                    <doc.icon className="h-5 w-5 text-foreground flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-foreground truncate">{doc.name}</p>
-                      <p className="text-xs text-muted-foreground">Uploaded: {doc.date}</p>
+                  <div key={i} className="flex items-center gap-3 p-3 bg-muted/60 rounded-xl">
+                    <div className="w-9 h-9 rounded-[10px] bg-primary/8 flex items-center justify-center shrink-0">
+                      <doc.icon className="h-4 w-4 text-primary" />
                     </div>
-                    <span className="text-xs font-bold text-success bg-success/10 px-2 py-1 rounded-full flex-shrink-0">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-semibold text-foreground truncate">{doc.name}</p>
+                      <p className="text-[11px] text-muted-foreground">{doc.date}</p>
+                    </div>
+                    <span className="text-[11px] font-semibold text-success bg-success/10 px-2 py-[3px] rounded-full shrink-0">
                       ✓ {doc.status}
                     </span>
                   </div>
@@ -46,23 +48,19 @@ const Profile = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-border shadow-sm">
-            <CardContent className="p-4 space-y-3">
-              <h3 className="font-bold text-foreground">Emergency Contact</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between p-2 bg-secondary rounded-lg">
-                  <span className="text-muted-foreground">Phone</span>
-                  <span className="font-bold text-foreground">+1 234 567 8900</span>
+          <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
+            <CardContent className="p-4 space-y-2.5">
+              <h3 className="font-semibold text-[15px] text-foreground">Emergency Contact</h3>
+              {[
+                { label: "Phone", value: "+1 234 567 8900" },
+                { label: "Alt. Contact", value: "+1 234 567 1234" },
+                { label: "Blood Type", value: "O+" },
+              ].map((item, i) => (
+                <div key={i} className="flex justify-between p-2.5 bg-muted/60 rounded-xl text-[13px]">
+                  <span className="text-muted-foreground">{item.label}</span>
+                  <span className="font-semibold text-foreground">{item.value}</span>
                 </div>
-                <div className="flex justify-between p-2 bg-secondary rounded-lg">
-                  <span className="text-muted-foreground">Alt. Contact</span>
-                  <span className="font-bold text-foreground">+1 234 567 1234</span>
-                </div>
-                <div className="flex justify-between p-2 bg-secondary rounded-lg">
-                  <span className="text-muted-foreground">Blood Type</span>
-                  <span className="font-bold text-foreground">O+</span>
-                </div>
-              </div>
+              ))}
             </CardContent>
           </Card>
         </div>
@@ -72,24 +70,23 @@ const Profile = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
-        {/* Profile header with photos */}
-        <div className="flex items-center space-x-4">
+      <div className="space-y-5">
+        {/* Profile header */}
+        <div className="flex items-center gap-4">
           <div className="relative">
-            <Avatar className="h-20 w-20 border-2 border-foreground">
-              <AvatarFallback className="bg-secondary text-foreground text-xl font-bold">
-                <User className="h-8 w-8" />
+            <Avatar className="h-[72px] w-[72px] ring-2 ring-border">
+              <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/5 text-primary text-xl font-bold">
+                <User className="h-7 w-7" />
               </AvatarFallback>
             </Avatar>
-            {/* Pet avatar overlapping */}
-            <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-secondary border-2 border-card flex items-center justify-center">
+            <div className="absolute -bottom-0.5 -right-0.5 w-8 h-8 rounded-full bg-muted ring-2 ring-card flex items-center justify-center">
               <Dog className="h-4 w-4 text-foreground" />
             </div>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">John Doe</h2>
-            <p className="text-sm text-muted-foreground">& Buddy 🐾</p>
-            <p className="text-xs text-muted-foreground mt-0.5">All documents verified ✓</p>
+            <h2 className="text-[20px] font-bold text-foreground tracking-tight">John Doe</h2>
+            <p className="text-[14px] text-muted-foreground">& Buddy 🐾</p>
+            <p className="text-[12px] text-success font-medium mt-0.5">All documents verified ✓</p>
           </div>
         </div>
 
@@ -99,12 +96,18 @@ const Profile = () => {
             { icon: Bell, label: "Notifications", action: () => {} },
             { icon: Shield, label: "Privacy & Security", action: () => {} },
           ].map((item, i) => (
-            <Card key={i} className="border-border shadow-sm cursor-pointer hover:bg-secondary/50 transition-colors" onClick={item.action}>
+            <Card
+              key={i}
+              className="glass-strong rounded-2xl border-0 shadow-apple cursor-pointer active:scale-[0.98] transition-transform overflow-hidden"
+              onClick={item.action}
+            >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <item.icon className="h-5 w-5 text-foreground" />
-                    <span className="text-sm font-bold text-foreground">{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-[10px] bg-muted flex items-center justify-center">
+                      <item.icon className="h-[18px] w-[18px] text-foreground" />
+                    </div>
+                    <span className="text-[15px] font-medium text-foreground">{item.label}</span>
                   </div>
                   <ChevronRight className="h-4 w-4 text-muted-foreground" />
                 </div>

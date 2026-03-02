@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,72 +7,87 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
+    --background: 220 20% 97%;
+    --foreground: 220 20% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
+    --card-foreground: 220 20% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
+    --popover-foreground: 220 20% 10%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 220 90% 56%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 20% 10%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 220 10% 46%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 220 14% 93%;
+    --accent-foreground: 220 20% 10%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 90% 56%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 98%;
+    --success: 152 69% 41%;
+    --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 9%;
-    --danger: 0 84% 60%;
-    --danger-foreground: 0 0% 98%;
+    --warning-foreground: 0 0% 100%;
+    --danger: 0 72% 51%;
+    --danger-foreground: 0 0% 100%;
+
+    /* Glass tokens */
+    --glass-bg: 0 0% 100% / 0.55;
+    --glass-border: 0 0% 100% / 0.3;
+    --glass-blur: 20px;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+    /* Gradient tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(220 90% 56%), hsl(250 80% 60%));
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 97%), hsl(230 25% 95%));
+    --gradient-warm: linear-gradient(135deg, hsl(30 80% 55%), hsl(0 72% 51%));
+    --gradient-success: linear-gradient(135deg, hsl(152 69% 41%), hsl(170 60% 45%));
   }
 
   .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    --background: 224 20% 6%;
+    --foreground: 220 14% 96%;
 
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 224 20% 10%;
+    --card-foreground: 220 14% 96%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 224 20% 10%;
+    --popover-foreground: 220 14% 96%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 220 90% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 224 20% 14%;
+    --secondary-foreground: 220 14% 96%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
+    --muted: 224 20% 14%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 224 20% 16%;
+    --accent-foreground: 220 14% 96%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 83%;
+    --border: 224 20% 18%;
+    --input: 224 20% 18%;
+    --ring: 220 90% 60%;
+
+    --glass-bg: 224 20% 10% / 0.6;
+    --glass-border: 0 0% 100% / 0.08;
   }
 }
 
@@ -82,9 +97,11 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     -webkit-tap-highlight-color: transparent;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -92,9 +109,56 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
   }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
   
   .font-logo {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  /* Glass card */
+  .glass {
+    background: hsla(var(--glass-bg));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsla(var(--glass-border));
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: hsla(0 0% 100% / 0.72);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid hsla(0 0% 100% / 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .glass-nav {
+    background: hsla(0 0% 100% / 0.78);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-top: 0.5px solid hsla(0 0% 0% / 0.08);
+  }
+
+  /* Apple-style subtle shadow */
+  .shadow-apple {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .shadow-apple-lg {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-mesh {
+    background: 
+      radial-gradient(ellipse at 20% 0%, hsla(220, 90%, 56%, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, hsla(250, 80%, 60%, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsla(30, 80%, 55%, 0.04) 0%, transparent 60%),
+      hsl(var(--background));
   }
 }

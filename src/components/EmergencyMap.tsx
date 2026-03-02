@@ -26,42 +26,44 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
   };
 
   return (
-    <Card className="overflow-hidden border-border shadow-sm">
-      <div className="relative h-[240px] bg-muted">
-        {/* Simulated map grid */}
-        <div className="absolute inset-0 opacity-10">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={`h-${i}`} className="absolute w-full border-t border-foreground" style={{ top: `${i * 8}%` }} />
+    <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
+      <div className="relative h-[200px] bg-gradient-to-br from-primary/[0.06] via-muted to-accent">
+        {/* Map grid overlay */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={`h-${i}`} className="absolute w-full border-t border-foreground" style={{ top: `${i * 10}%` }} />
           ))}
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={`v-${i}`} className="absolute h-full border-l border-foreground" style={{ left: `${i * 8}%` }} />
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={`v-${i}`} className="absolute h-full border-l border-foreground" style={{ left: `${i * 10}%` }} />
           ))}
         </div>
         
+        {/* Pin */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative">
-            <MapPin className="text-foreground w-8 h-8" />
+          <div className="relative animate-float">
+            <div className="absolute inset-0 -m-3 rounded-full bg-primary/10 animate-pulse-dot" />
+            <MapPin className="w-7 h-7 text-primary drop-shadow-md" />
           </div>
         </div>
         
-        <div className="absolute bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm p-4 border-t border-border">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="font-bold text-foreground">{shelterName}</h3>
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <span>{distance}</span>
-                <span>•</span>
-                <span>{eta}</span>
-              </div>
+        {/* Bottom info bar */}
+        <div className="absolute bottom-0 inset-x-0 glass-strong p-3.5">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-[15px] text-foreground truncate">{shelterName}</h3>
+              <p className="text-[13px] text-muted-foreground mt-0.5">
+                {distance} · {eta}
+              </p>
             </div>
             
             <Button
               onClick={handleStartNavigation}
               disabled={!isApproved}
-              className="rounded-xl px-5 h-11 font-bold"
+              size="sm"
+              className="rounded-xl h-9 px-4 text-[13px] font-semibold shadow-apple shrink-0 bg-primary hover:bg-primary/90"
             >
-              <span>Navigate</span>
-              <Navigation className="h-4 w-4 ml-1" />
+              Navigate
+              <Navigation className="h-3.5 w-3.5 ml-1" />
             </Button>
           </div>
         </div>

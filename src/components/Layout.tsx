@@ -11,18 +11,20 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, hideNav = false }) => {
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto py-4 px-4 mb-20 max-w-md relative">
-        <header className="mb-6">
-          <div className="flex items-center justify-between bg-card rounded-2xl p-4 shadow-sm border border-border">
-            <Link to="/" className="flex items-center">
-              <span className="font-logo text-2xl tracking-tight text-foreground">
+    <div className="min-h-screen bg-gradient-mesh">
+      <main className="mx-auto py-3 px-4 mb-24 max-w-[430px] relative pt-safe">
+        {/* Header — Apple-style glass bar */}
+        <header className="mb-5">
+          <div className="glass-strong rounded-2xl px-5 py-3.5 flex items-center justify-between">
+            <Link to="/" className="flex items-center active:opacity-70 transition-opacity">
+              <span className="font-logo text-[22px] bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                 SurfWoof
               </span>
             </Link>
+            <div className="h-2 w-2 rounded-full bg-success animate-pulse-dot" />
           </div>
         </header>
-        <div className="space-y-4 relative">{children}</div>
+        <div className="space-y-3.5 relative">{children}</div>
       </main>
       {!hideNav && <BottomNav />}
       <Toaster />
