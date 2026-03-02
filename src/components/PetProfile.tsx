@@ -1,16 +1,18 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle2 } from "lucide-react";
 import dogProfileImg from "@/assets/dog-profile.png";
 
 interface PetProfileProps {
   name: string;
   breed: string;
   age: number;
-  specialNeeds: string;
+  registrationNo?: string;
+  rabiesVaccinated?: boolean;
 }
 
-const PetProfile: React.FC<PetProfileProps> = ({ name, breed, age, specialNeeds }) => {
+const PetProfile: React.FC<PetProfileProps> = ({ name, breed, age, registrationNo = "410123-2022-00581", rabiesVaccinated = true }) => {
   return (
     <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
       <CardContent className="p-4">
@@ -25,13 +27,17 @@ const PetProfile: React.FC<PetProfileProps> = ({ name, breed, age, specialNeeds 
             <p className="text-[13px] text-muted-foreground mt-0.5">
               {breed} · {age} yrs
             </p>
-            {specialNeeds && (
-              <div className="mt-1.5">
-                <span className="inline-flex items-center text-[11px] font-semibold py-[3px] px-2 bg-warning/12 text-warning rounded-full">
-                  ⚠ {specialNeeds}
+            <div className="flex items-center gap-3 mt-1.5">
+              {rabiesVaccinated && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-success">
+                  <CheckCircle2 className="h-3 w-3" />
+                  Rabies
                 </span>
-              </div>
-            )}
+              )}
+              <span className="text-[11px] text-muted-foreground font-mono">
+                #{registrationNo}
+              </span>
+            </div>
           </div>
         </div>
       </CardContent>

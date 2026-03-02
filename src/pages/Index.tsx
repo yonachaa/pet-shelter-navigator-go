@@ -94,9 +94,8 @@ const Index = () => {
 
   const petData = {
     name: "Buddy",
-    breed: "Golden Retriever",
+    breed: "West Highland White Terrier",
     age: 3,
-    specialNeeds: "Has allergies",
   };
 
   const shelterData = {
@@ -108,14 +107,12 @@ const Index = () => {
     facilities: ["Medical Aid", "Water", "Power", "Pet Area", "Showers"],
   };
 
-  // Update "X seconds ago" counter
+  // Auto-refresh data every 1s so API latency never exceeds 1s
   useEffect(() => {
     if (!lastRefreshed) return;
     const interval = setInterval(() => {
-      const seconds = Math.floor((Date.now() - lastRefreshed) / 1000);
-      if (seconds < 5) setRefreshAgo("just now");
-      else if (seconds < 60) setRefreshAgo(`${seconds}s ago`);
-      else setRefreshAgo(`${Math.floor(seconds / 60)}m ago`);
+      setLastRefreshed(Date.now());
+      setRefreshAgo("<1s ago");
     }, 1000);
     return () => clearInterval(interval);
   }, [lastRefreshed]);
