@@ -38,6 +38,7 @@ const Index = () => {
         toast({
           title: "✅ Shelter Approved",
           description: "You are cleared to proceed to Downtown Emergency Shelter.",
+          duration: 4000,
         });
       }, 3000);
       return () => clearTimeout(timer);
@@ -81,32 +82,22 @@ const Index = () => {
         </div>
       ) : (
         <>
-          {/* Status Banner — Glass */}
-          <div className={`glass-strong rounded-2xl p-4 flex items-center gap-3 ${
-            isApproved 
-              ? "ring-1 ring-success/30" 
-              : "ring-1 ring-warning/30"
-          }`}>
-            {isApproved ? (
-              <div className="w-9 h-9 rounded-full bg-success/12 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="h-5 w-5 text-success" />
-              </div>
-            ) : (
+          {/* Pending status inline — only show when not approved */}
+          {!isApproved && (
+            <div className="glass-strong rounded-2xl p-4 flex items-center gap-3 ring-1 ring-warning/30">
               <div className="w-9 h-9 rounded-full bg-warning/12 flex items-center justify-center shrink-0">
                 <Loader2 className="h-5 w-5 text-warning animate-spin" />
               </div>
-            )}
-            <div className="min-w-0">
-              <p className={`font-semibold text-[13px] ${isApproved ? "text-success" : "text-warning"}`}>
-                {isApproved ? "APPROVED — Proceed to Shelter" : "PENDING — Awaiting Approval"}
-              </p>
-              <p className="text-[12px] text-muted-foreground mt-0.5 leading-snug">
-                {isApproved 
-                  ? "Your spot has been confirmed. Navigate now." 
-                  : "Verifying registration and pet documents..."}
-              </p>
+              <div className="min-w-0">
+                <p className="font-semibold text-[13px] text-warning">
+                  PENDING — Awaiting Approval
+                </p>
+                <p className="text-[12px] text-muted-foreground mt-0.5 leading-snug">
+                  Verifying registration and pet documents...
+                </p>
+              </div>
             </div>
-          </div>
+          )}
 
           <PetProfile {...petData} />
           

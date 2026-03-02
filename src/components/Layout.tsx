@@ -12,17 +12,15 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, hideNav = false }) => {
   return (
     <div className="min-h-screen bg-gradient-mesh">
-      <main className="mx-auto py-3 px-4 mb-24 max-w-[430px] relative pt-safe">
-        {/* Header — Apple-style glass bar */}
-        <header className="mb-5">
-          <div className="glass-strong rounded-2xl px-5 py-3.5 flex items-center justify-between">
-            <Link to="/" className="flex items-center active:opacity-70 transition-opacity">
-              <span className="font-logo text-[22px] bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                SurfWoof
-              </span>
-            </Link>
-            <div className="h-2 w-2 rounded-full bg-success animate-pulse-dot" />
-          </div>
+      <main className="mx-auto py-3 px-4 mb-24 max-w-[430px] relative">
+        {/* Header — minimal, no box */}
+        <header className="mb-5 px-1 py-3 flex items-center justify-between">
+          <Link to="/" className="active:opacity-70 transition-opacity">
+            <span className="font-logo text-[18px] text-foreground">
+              SurfWoof
+            </span>
+          </Link>
+          <div className="h-2 w-2 rounded-full bg-success animate-pulse-dot" />
         </header>
         <div className="space-y-3.5 relative">{children}</div>
       </main>
