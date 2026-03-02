@@ -1,19 +1,18 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Bell, Radio } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Bell, AlertTriangle, CheckCircle, Info, ChevronDown, ChevronUp, Radio } from "lucide-react";
 
 const alertsData = [
   {
-    id: 1, type: "critical", title: "Hurricane Warning", icon: AlertTriangle,
+    id: 1, type: "critical", title: "🔴 Hurricane Warning", icon: AlertTriangle,
     message: "Category 3 hurricane approaching. Mandatory evacuation in effect.",
     detail: "Hurricane Maria is expected to make landfall within 12 hours. All residents in Zone A and B must evacuate immediately. Pet-friendly shelters are available at Downtown Emergency Shelter and Westside Community Center. Bring essential documents and supplies for 72 hours.",
     time: "35 min ago",
   },
   {
-    id: 2, type: "warning", title: "Flash Flood Alert", icon: AlertTriangle,
+    id: 2, type: "warning", title: "⚠️ Flash Flood Alert", icon: AlertTriangle,
     message: "Flash flood warning for low-lying areas until 8 PM.",
     detail: "National Weather Service has issued a flash flood warning. Avoid driving through flooded roads. If water rises in your area, move to higher ground immediately. Emergency services are on standby.",
     time: "2 hours ago",
@@ -47,10 +46,6 @@ const alertsData = [
 const Alerts = () => {
   const [expanded, setExpanded] = useState<number | null>(null);
 
-  useEffect(() => {
-    document.title = "Alerts — SurfWoof";
-  }, []);
-
   const getAccent = (type: string) => {
     switch (type) {
       case "critical": return "from-danger/20 to-danger/5";
@@ -78,52 +73,37 @@ const Alerts = () => {
             {alertsData.filter(a => a.type === "critical").length} Critical
           </span>
         </div>
-        {alertsData.map((alert, index) => (
-          <motion.div
+        {alertsData.map((alert) => (
+          <Card
             key={alert.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05, duration: 0.3 }}
+            className="glass-strong rounded-2xl border-0 shadow-apple cursor-pointer active:scale-[0.98] transition-transform overflow-hidden"
+            onClick={() => setExpanded(expanded === alert.id ? null : alert.id)}
           >
-            <Card
-              className="glass-strong rounded-2xl border-0 shadow-apple cursor-pointer active:scale-[0.98] transition-transform overflow-hidden"
-              onClick={() => setExpanded(expanded === alert.id ? null : alert.id)}
-            >
-              <div className={`h-1 bg-gradient-to-r ${getAccent(alert.type)}`} />
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${getDot(alert.type)}`} />
-                    <div className="min-w-0">
-                      <h3 className="font-semibold text-[14px] text-foreground">{alert.title}</h3>
-                      <p className="text-[13px] text-muted-foreground mt-0.5 leading-snug">{alert.message}</p>
-                      <span className="text-[11px] text-muted-foreground/70 mt-1 block">{alert.time}</span>
-                    </div>
+            {/* Gradient accent stripe */}
+            <div className={`h-1 bg-gradient-to-r ${getAccent(alert.type)}`} />
+            <CardContent className="p-4">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${getDot(alert.type)}`} />
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-[14px] text-foreground">{alert.title}</h3>
+                    <p className="text-[13px] text-muted-foreground mt-0.5 leading-snug">{alert.message}</p>
+                    <span className="text-[11px] text-muted-foreground/70 mt-1 block">{alert.time}</span>
                   </div>
-                  {expanded === alert.id ? (
-                    <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                  )}
                 </div>
-                <AnimatePresence>
-                  {expanded === alert.id && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-3 pt-3 ml-5 border-t border-border">
-                        <p className="text-[13px] text-foreground leading-relaxed">{alert.detail}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </CardContent>
-            </Card>
-          </motion.div>
+                {expanded === alert.id ? (
+                  <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                )}
+              </div>
+              {expanded === alert.id && (
+                <div className="mt-3 pt-3 ml-5 border-t border-border">
+                  <p className="text-[13px] text-foreground leading-relaxed">{alert.detail}</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         ))}
       </div>
     </Layout>

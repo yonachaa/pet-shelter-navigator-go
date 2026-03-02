@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Navigation } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
 
 const shelters = [
   {
@@ -37,10 +37,6 @@ const Shelters = () => {
   const [reserving, setReserving] = useState<number | null>(null);
   const [reserved, setReserved] = useState<number[]>([]);
 
-  useEffect(() => {
-    document.title = "Nearby Shelters — SurfWoof";
-  }, []);
-
   const handleReserve = (id: number, name: string) => {
     setReserving(id);
     setTimeout(() => {
@@ -58,88 +54,82 @@ const Shelters = () => {
     <Layout>
       <div className="space-y-3.5">
         <h2 className="text-[20px] font-bold text-foreground tracking-tight">Nearby Shelters</h2>
-        {shelters.map((s, index) => {
+        {shelters.map((s) => {
           const occupancy = Math.round(((s.capacity.total - s.capacity.available) / s.capacity.total) * 100);
           const isReserved = reserved.includes(s.id);
 
           return (
-            <motion.div
-              key={s.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.06, duration: 0.3 }}
-            >
-              <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <h3 className="font-semibold text-[15px] text-foreground">{s.name}</h3>
-                      <p className="text-[13px] text-muted-foreground">{s.address}</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="font-bold text-[15px] text-foreground">{s.distance}</span>
-                      <p className="text-[11px] text-muted-foreground">{s.eta}</p>
-                    </div>
+            <Card key={s.id} className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-[15px] text-foreground">{s.name}</h3>
+                    <p className="text-[13px] text-muted-foreground">{s.address}</p>
                   </div>
-
-                  <div>
-                    <div className="flex justify-between text-[11px] mb-1">
-                      <span className="text-muted-foreground">Capacity</span>
-                      <span className={`font-semibold ${s.capacity.available <= 5 ? 'text-danger' : 'text-foreground'}`}>
-                        {s.capacity.available}/{s.capacity.total}
-                        {s.capacity.available <= 5 && " · Almost Full"}
-                      </span>
-                    </div>
-                    <div className="h-[5px] bg-muted rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all duration-500 ${occupancy > 90 ? 'bg-danger' : occupancy > 60 ? 'bg-warning' : 'bg-success'}`}
-                        style={{ width: `${occupancy}%` }}
-                      />
-                    </div>
+                  <div className="text-right shrink-0">
+                    <span className="font-bold text-[15px] text-foreground">{s.distance}</span>
+                    <p className="text-[11px] text-muted-foreground">{s.eta}</p>
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    {s.petFriendly ? (
-                      <Badge variant="outline" className="text-[11px] font-semibold border-primary/30 text-primary rounded-lg h-[22px]">
-                        🐾 Pet Friendly
-                      </Badge>
+                {/* Capacity */}
+                <div>
+                  <div className="flex justify-between text-[11px] mb-1">
+                    <span className="text-muted-foreground">Capacity</span>
+                    <span className={`font-semibold ${s.capacity.available <= 5 ? 'text-danger' : 'text-foreground'}`}>
+                      {s.capacity.available}/{s.capacity.total}
+                      {s.capacity.available <= 5 && " · Almost Full"}
+                    </span>
+                  </div>
+                  <div className="h-[5px] bg-muted rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${occupancy > 90 ? 'bg-danger' : occupancy > 60 ? 'bg-warning' : 'bg-success'}`}
+                      style={{ width: `${occupancy}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {s.petFriendly ? (
+                    <Badge variant="outline" className="text-[11px] font-semibold border-primary/30 text-primary rounded-lg h-[22px]">
+                      🐾 Pet Friendly
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="text-[11px] text-muted-foreground border-border rounded-lg h-[22px]">
+                      No Pets
+                    </Badge>
+                  )}
+                  {s.facilities.map((f, i) => (
+                    <span key={i} className="text-[11px] py-[2px] px-2 bg-muted text-muted-foreground rounded-lg font-medium">{f}</span>
+                  ))}
+                </div>
+
+                <div className="flex gap-2 pt-0.5">
+                  <Button
+                    onClick={() => handleReserve(s.id, s.name)}
+                    disabled={isReserved || reserving === s.id || s.capacity.available === 0}
+                    variant={isReserved ? "outline" : "default"}
+                    className="flex-1 h-11 rounded-xl font-semibold text-[13px] shadow-apple active:scale-[0.98] transition-transform"
+                  >
+                    {reserving === s.id ? (
+                      <><MapPin className="h-3.5 w-3.5 mr-1 animate-pulse" /> Reserving...</>
+                    ) : isReserved ? (
+                      "✓ Reserved"
                     ) : (
-                      <Badge variant="outline" className="text-[11px] text-muted-foreground border-border rounded-lg h-[22px]">
-                        No Pets
-                      </Badge>
+                      <><MapPin className="h-3.5 w-3.5 mr-1" /> Reserve Spot</>
                     )}
-                    {s.facilities.map((f, i) => (
-                      <span key={i} className="text-[11px] py-[2px] px-2 bg-muted text-muted-foreground rounded-lg font-medium">{f}</span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-2 pt-0.5">
-                    <Button
-                      onClick={() => handleReserve(s.id, s.name)}
-                      disabled={isReserved || reserving === s.id || s.capacity.available === 0}
-                      variant={isReserved ? "outline" : "default"}
-                      className="flex-1 h-11 rounded-xl font-semibold text-[13px] shadow-apple active:scale-[0.98] transition-transform"
-                    >
-                      {reserving === s.id ? (
-                        <><MapPin className="h-3.5 w-3.5 mr-1 animate-pulse" /> Reserving...</>
-                      ) : isReserved ? (
-                        "✓ Reserved"
-                      ) : (
-                        <><MapPin className="h-3.5 w-3.5 mr-1" /> Reserve Spot</>
-                      )}
-                    </Button>
-                    <Button
-                      onClick={() => handleNavigate(s.name, s.address)}
-                      variant="outline"
-                      size="icon"
-                      className="h-11 w-11 rounded-xl shrink-0"
-                    >
-                      <Navigation className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                  </Button>
+                  <Button
+                    onClick={() => handleNavigate(s.name, s.address)}
+                    variant="outline"
+                    size="icon"
+                    className="h-11 w-11 rounded-xl shrink-0"
+                  >
+                    <Navigation className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
