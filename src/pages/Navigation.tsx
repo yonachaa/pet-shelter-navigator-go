@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Navigation as NavIcon, MapPin, Clock, Route } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const NavigationPage = () => {
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const NavigationPage = () => {
   const [etaMinutes, setEtaMinutes] = useState(15);
   const [distanceMiles, setDistanceMiles] = useState(1.4);
   const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    document.title = `Navigate to ${destination} — SurfWoof`;
+  }, [destination]);
 
   useEffect(() => {
     if (isNavigating && etaMinutes > 0) {
@@ -28,49 +33,74 @@ const NavigationPage = () => {
     <div className="fixed inset-0 bg-background flex flex-col z-50">
       {/* Map area */}
       <div className="flex-1 relative bg-gradient-to-br from-primary/[0.04] via-muted to-accent overflow-hidden">
-        {/* Grid */}
-        <div className="absolute inset-0 opacity-[0.05]">
-          {Array.from({ length: 24 }).map((_, i) => (
-            <div key={`h-${i}`} className="absolute w-full border-t border-foreground" style={{ top: `${i * 4.16}%` }} />
-          ))}
-          {Array.from({ length: 14 }).map((_, i) => (
-            <div key={`v-${i}`} className="absolute h-full border-l border-foreground" style={{ left: `${i * 7.14}%` }} />
-          ))}
-        </div>
+        {/* Detailed SVG map */}
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 430 600" preserveAspectRatio="xMidYMid slice">
+          {/* Roads */}
+          <rect x="0" y="180" width="430" height="16" fill="hsl(var(--muted-foreground))" opacity="0.08" rx="2" />
+          <rect x="0" y="320" width="430" height="12" fill="hsl(var(--muted-foreground))" opacity="0.06" rx="2" />
+          <rect x="0" y="440" width="430" height="14" fill="hsl(var(--muted-foreground))" opacity="0.07" rx="2" />
+          <rect x="130" y="0" width="14" height="600" fill="hsl(var(--muted-foreground))" opacity="0.08" rx="2" />
+          <rect x="280" y="0" width="12" height="600" fill="hsl(var(--muted-foreground))" opacity="0.06" rx="2" />
+          <rect x="370" y="0" width="10" height="600" fill="hsl(var(--muted-foreground))" opacity="0.05" rx="1" />
+          <rect x="60" y="0" width="8" height="600" fill="hsl(var(--muted-foreground))" opacity="0.04" rx="1" />
 
-        {/* Route line */}
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="routeGrad" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
+          {/* Buildings */}
+          <rect x="15" y="30" width="35" height="130" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.1" />
+          <rect x="75" y="50" width="45" height="110" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.08" />
+          <rect x="155" y="20" width="110" height="140" rx="6" fill="hsl(var(--primary))" opacity="0.1" />
+          <rect x="300" y="40" width="60" height="120" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.09" />
+          <rect x="385" y="30" width="30" height="130" rx="3" fill="hsl(var(--muted-foreground))" opacity="0.07" />
+
+          <rect x="15" y="210" width="100" height="90" rx="5" fill="hsl(var(--muted-foreground))" opacity="0.08" />
+          <rect x="155" y="205" width="55" height="100" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.1" />
+          <rect x="220" y="210" width="50" height="95" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.07" />
+          <rect x="300" y="200" width="55" height="105" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.09" />
+          <rect x="385" y="210" width="35" height="90" rx="3" fill="hsl(var(--muted-foreground))" opacity="0.06" />
+
+          <rect x="15" y="345" width="50" height="80" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.09" />
+          <rect x="75" y="340" width="45" height="85" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.07" />
+          <rect x="155" y="345" width="115" height="80" rx="5" fill="hsl(var(--muted-foreground))" opacity="0.08" />
+          <rect x="300" y="340" width="65" height="85" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.1" />
+
+          <rect x="15" y="465" width="105" height="60" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.07" />
+          <rect x="155" y="460" width="60" height="70" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.09" />
+          <rect x="300" y="465" width="55" height="60" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.08" />
+
+          {/* Shelter label */}
+          <text x="210" y="98" fontSize="10" fill="hsl(var(--primary))" fontWeight="700" textAnchor="middle" opacity="0.6">SHELTER</text>
+
+          {/* Route */}
           <path
-            d="M 50 82 L 50 60 L 38 48 L 38 28 L 50 18"
-            stroke="url(#routeGrad)"
-            strokeWidth="1.2"
+            d="M 215 490 L 215 447 L 137 447 L 137 326 L 137 188 L 210 188 L 210 160"
+            stroke="hsl(var(--primary))"
+            strokeWidth="4"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeDasharray={isNavigating ? "3 2" : "none"}
-          />
+            strokeDasharray={isNavigating ? "8 5" : "none"}
+            opacity="0.5"
+          >
+            {isNavigating && (
+              <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1s" repeatCount="indefinite" />
+            )}
+          </path>
         </svg>
 
-        {/* Current location dot */}
-        <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2">
-          <div className="relative">
-            <div className="w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/30" />
-            <div className="absolute -inset-2 rounded-full bg-primary/20 animate-pulse-dot" />
+        {/* Shelter pin */}
+        <div className="absolute" style={{ top: '18%', left: '49%', transform: 'translate(-50%, -100%)' }}>
+          <div className="relative animate-float">
+            <div className="absolute inset-0 -m-3 rounded-full bg-primary/10 animate-pulse-dot" />
+            <MapPin className="w-8 h-8 text-primary drop-shadow-lg" fill="hsl(var(--primary))" fillOpacity={0.2} />
           </div>
         </div>
 
-        {/* Destination */}
-        <div className="absolute top-[15%] left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <MapPin className="w-7 h-7 text-danger drop-shadow-md" fill="hsl(var(--danger))" />
-          <span className="text-[11px] font-semibold text-foreground mt-1.5 bg-card/90 backdrop-blur-sm px-2.5 py-1 rounded-lg shadow-apple">
-            {destination}
-          </span>
+        {/* Current location */}
+        <div className="absolute" style={{ top: '78%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <div className="relative">
+            <div className="w-5 h-5 rounded-full bg-primary shadow-lg shadow-primary/40 border-[2.5px] border-card" />
+            <div className="absolute -inset-2.5 rounded-full bg-primary/20 animate-pulse-dot" />
+          </div>
+          <span className="absolute top-6 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-foreground whitespace-nowrap bg-card/90 backdrop-blur-sm px-2 py-0.5 rounded-md shadow-apple">You</span>
         </div>
 
         {/* Back button */}
@@ -85,7 +115,12 @@ const NavigationPage = () => {
       </div>
 
       {/* Bottom panel */}
-      <div className="glass-nav pb-safe">
+      <motion.div
+        className="glass-nav pb-safe"
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.15, duration: 0.35 }}
+      >
         <div className="max-w-[430px] mx-auto p-5 space-y-4">
           <div>
             <h2 className="text-[17px] font-bold text-foreground">{destination}</h2>
@@ -131,7 +166,7 @@ const NavigationPage = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
