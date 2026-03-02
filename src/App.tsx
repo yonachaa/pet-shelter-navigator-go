@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Shelters from "./pages/Shelters";
 import Profile from "./pages/Profile";
 import Alerts from "./pages/Alerts";
+import NavigationPage from "./pages/Navigation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/shelters" element={<Shelters />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/alerts" element={<Alerts />} />
+          <Route path="/navigate" element={<NavigationPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

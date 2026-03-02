@@ -6,74 +6,60 @@ import { Badge } from "@/components/ui/badge";
 interface ShelterCardProps {
   name: string;
   address: string;
-  capacity: {
-    total: number;
-    available: number;
-  };
+  capacity: { total: number; available: number };
   petFriendly: boolean;
   status: "pending" | "approved" | "rejected";
   facilities: string[];
 }
 
 const ShelterCard: React.FC<ShelterCardProps> = ({
-  name,
-  address,
-  capacity,
-  petFriendly,
-  status,
-  facilities,
+  name, address, capacity, petFriendly, status, facilities,
 }) => {
-  const getStatusColor = () => {
-    switch (status) {
-      case "approved":
-        return "bg-emergency-success/10 text-emergency-success";
-      case "rejected":
-        return "bg-emergency-danger/10 text-emergency-danger";
-      default:
-        return "bg-emergency-warning/10 text-emergency-warning";
-    }
+  const statusConfig = {
+    approved: { label: "Approved", className: "bg-success/10 text-success border-success/30" },
+    rejected: { label: "Rejected", className: "bg-danger/10 text-danger border-danger/30" },
+    pending: { label: "Pending", className: "bg-warning/10 text-warning border-warning/30" },
   };
 
-  const getStatusText = () => {
-    switch (status) {
-      case "approved":
-        return "Approved";
-      case "Rejected":
-        return "rejected";
-      
-    }
-  };
+  const { label, className } = statusConfig[status];
+  const occupancyPercent = Math.round(((capacity.total - capacity.available) / capacity.total) * 100);
 
   return (
-    <Card className="mb-6 emergency-shadow border-none">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-bold text-lg text-emergency-dark">{name}</h3>
-          <span
-            className={`inline-block text-xs font-medium py-1 px-2 rounded-full ${getStatusColor()}`}
-          >
-            {getStatusText()}
+    <Card className="border-border shadow-sm">
+      <CardContent className="p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-foreground">{name}</h3>
+          <span className={`text-xs font-bold py-1 px-2.5 rounded-full border ${className}`}>
+            {label}
           </span>
         </div>
-        <p className="text-sm text-gray-500 mb-3">{address}</p>
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-xs">
-            <span className="font-medium text-emergency-dark">
-              Capacity: {capacity.available}/{capacity.total}
-            </span>
+        <p className="text-sm text-muted-foreground">{address}</p>
+        
+        {/* Capacity bar */}
+        <div>
+          <div className="flex justify-between text-xs mb-1.5">
+            <span className="text-muted-foreground">Capacity</span>
+            <span className="font-bold text-foreground">{capacity.available}/{capacity.total} available</span>
           </div>
+          <div className="h-2 bg-secondary rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all ${occupancyPercent > 80 ? 'bg-danger' : occupancyPercent > 50 ? 'bg-warning' : 'bg-success'}`}
+              style={{ width: `${occupancyPercent}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2">
           {petFriendly && (
-            <Badge variant="outline" className="text-xs border-emergency-primary text-emergency-primary">
-              Pet
+            <Badge variant="outline" className="text-xs font-bold border-foreground text-foreground">
+              🐾 Pet Friendly
             </Badge>
           )}
         </div>
-        <div className="flex flex-wrap gap-1">
+
+        <div className="flex flex-wrap gap-1.5">
           {facilities.map((facility, index) => (
-            <span
-              key={index}
-              className="text-xs py-1 px-2 bg-emergency-primary/5 text-emergency-primary/70 rounded-full"
-            >
+            <span key={index} className="text-xs py-1 px-2.5 bg-secondary text-muted-foreground rounded-full font-medium">
               {facility}
             </span>
           ))}
