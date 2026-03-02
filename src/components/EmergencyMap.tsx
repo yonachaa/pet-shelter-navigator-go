@@ -37,6 +37,27 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           <rect x="300" y="0" width="10" height="220" fill="hsl(var(--muted-foreground))" opacity="0.06" rx="1" />
           <rect x="80" y="0" width="8" height="220" fill="hsl(var(--muted-foreground))" opacity="0.05" rx="1" />
 
+          {/* Flood zones */}
+          <defs>
+            <radialGradient id="flood1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.08" />
+            </radialGradient>
+            <radialGradient id="flood2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#2563eb" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#2563eb" stopOpacity="0.05" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="60" cy="160" rx="65" ry="40" fill="url(#flood1)" />
+          <ellipse cx="340" cy="100" rx="55" ry="50" fill="url(#flood2)" />
+          <ellipse cx="130" cy="80" rx="35" ry="25" fill="url(#flood1)" />
+          {/* Flood wave pattern lines */}
+          <path d="M 10 155 Q 30 148 50 155 Q 70 162 90 155 Q 110 148 120 155" stroke="#3b82f6" strokeWidth="1.2" fill="none" opacity="0.25" />
+          <path d="M 15 170 Q 35 163 55 170 Q 75 177 95 170 Q 115 163 125 170" stroke="#3b82f6" strokeWidth="1" fill="none" opacity="0.18" />
+          <path d="M 295 90 Q 315 83 335 90 Q 355 97 375 90 Q 390 83 395 90" stroke="#2563eb" strokeWidth="1.2" fill="none" opacity="0.25" />
+          <path d="M 300 110 Q 320 103 340 110 Q 360 117 380 110" stroke="#2563eb" strokeWidth="1" fill="none" opacity="0.18" />
+          <path d="M 105 75 Q 120 68 135 75 Q 150 82 160 75" stroke="#3b82f6" strokeWidth="1" fill="none" opacity="0.2" />
+
           {/* Buildings */}
           <rect x="20" y="20" width="45" height="60" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.1" />
           <rect x="100" y="30" width="60" height="50" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.12" />
@@ -50,9 +71,6 @@ export const EmergencyMap: React.FC<EmergencyMapProps> = ({
           <rect x="110" y="172" width="55" height="30" rx="3" fill="hsl(var(--muted-foreground))" opacity="0.08" />
           <rect x="215" y="170" width="65" height="35" rx="4" fill="hsl(var(--muted-foreground))" opacity="0.1" />
           <rect x="325" y="172" width="45" height="30" rx="3" fill="hsl(var(--muted-foreground))" opacity="0.07" />
-
-          {/* Shelter label on building */}
-          <text x="247" y="136" fontSize="7" fill="hsl(var(--primary))" fontWeight="600" textAnchor="middle" opacity="0.7">Shelter</text>
 
           {/* Dashed route from user to shelter */}
           <path
