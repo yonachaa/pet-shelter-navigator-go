@@ -46,49 +46,60 @@ const alertsData = [
 const Alerts = () => {
   const [expanded, setExpanded] = useState<number | null>(null);
 
-  const getTypeStyle = (type: string) => {
+  const getAccent = (type: string) => {
     switch (type) {
-      case "critical": return "border-l-4 border-l-danger bg-danger/5";
-      case "warning": return "border-l-4 border-l-warning bg-warning/5";
-      case "success": return "border-l-4 border-l-success bg-success/5";
-      default: return "border-l-4 border-l-border";
+      case "critical": return "from-danger/20 to-danger/5";
+      case "warning": return "from-warning/20 to-warning/5";
+      case "success": return "from-success/20 to-success/5";
+      default: return "from-primary/10 to-primary/5";
+    }
+  };
+
+  const getDot = (type: string) => {
+    switch (type) {
+      case "critical": return "bg-danger";
+      case "warning": return "bg-warning";
+      case "success": return "bg-success";
+      default: return "bg-primary";
     }
   };
 
   return (
     <Layout>
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Alerts</h2>
-          <span className="text-xs font-bold text-danger bg-danger/10 px-2.5 py-1 rounded-full">
+          <h2 className="text-[20px] font-bold text-foreground tracking-tight">Alerts</h2>
+          <span className="text-[11px] font-semibold text-danger bg-danger/10 px-2.5 py-[3px] rounded-full">
             {alertsData.filter(a => a.type === "critical").length} Critical
           </span>
         </div>
         {alertsData.map((alert) => (
           <Card
             key={alert.id}
-            className={`border-border shadow-sm cursor-pointer transition-colors hover:bg-secondary/30 overflow-hidden ${getTypeStyle(alert.type)}`}
+            className="glass-strong rounded-2xl border-0 shadow-apple cursor-pointer active:scale-[0.98] transition-transform overflow-hidden"
             onClick={() => setExpanded(expanded === alert.id ? null : alert.id)}
           >
+            {/* Gradient accent stripe */}
+            <div className={`h-1 bg-gradient-to-r ${getAccent(alert.type)}`} />
             <CardContent className="p-4">
-              <div className="flex items-start justify-between">
-                <div className="flex items-start space-x-3 flex-1 min-w-0">
-                  <alert.icon className="h-5 w-5 text-foreground mt-0.5 flex-shrink-0" />
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${getDot(alert.type)}`} />
                   <div className="min-w-0">
-                    <h3 className="font-bold text-sm text-foreground">{alert.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-0.5">{alert.message}</p>
-                    <span className="text-xs text-muted-foreground mt-1 block">{alert.time}</span>
+                    <h3 className="font-semibold text-[14px] text-foreground">{alert.title}</h3>
+                    <p className="text-[13px] text-muted-foreground mt-0.5 leading-snug">{alert.message}</p>
+                    <span className="text-[11px] text-muted-foreground/70 mt-1 block">{alert.time}</span>
                   </div>
                 </div>
                 {expanded === alert.id ? (
-                  <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+                  <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+                  <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
                 )}
               </div>
               {expanded === alert.id && (
-                <div className="mt-3 pt-3 border-t border-border">
-                  <p className="text-sm text-foreground leading-relaxed">{alert.detail}</p>
+                <div className="mt-3 pt-3 ml-5 border-t border-border">
+                  <p className="text-[13px] text-foreground leading-relaxed">{alert.detail}</p>
                 </div>
               )}
             </CardContent>

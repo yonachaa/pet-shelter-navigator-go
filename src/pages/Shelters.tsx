@@ -52,75 +52,78 @@ const Shelters = () => {
 
   return (
     <Layout>
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Nearby Shelters</h2>
+      <div className="space-y-3.5">
+        <h2 className="text-[20px] font-bold text-foreground tracking-tight">Nearby Shelters</h2>
         {shelters.map((s) => {
           const occupancy = Math.round(((s.capacity.total - s.capacity.available) / s.capacity.total) * 100);
           const isReserved = reserved.includes(s.id);
 
           return (
-            <Card key={s.id} className="border-border shadow-sm">
+            <Card key={s.id} className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
               <CardContent className="p-4 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-bold text-foreground">{s.name}</h3>
-                    <p className="text-sm text-muted-foreground">{s.address}</p>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-[15px] text-foreground">{s.name}</h3>
+                    <p className="text-[13px] text-muted-foreground">{s.address}</p>
                   </div>
-                  <div className="text-right text-sm shrink-0 ml-2">
-                    <span className="font-bold text-foreground">{s.distance}</span>
-                    <p className="text-xs text-muted-foreground">{s.eta}</p>
+                  <div className="text-right shrink-0">
+                    <span className="font-bold text-[15px] text-foreground">{s.distance}</span>
+                    <p className="text-[11px] text-muted-foreground">{s.eta}</p>
                   </div>
                 </div>
 
                 {/* Capacity */}
                 <div>
-                  <div className="flex justify-between text-xs mb-1">
+                  <div className="flex justify-between text-[11px] mb-1">
                     <span className="text-muted-foreground">Capacity</span>
-                    <span className={`font-bold ${s.capacity.available <= 5 ? 'text-danger' : 'text-foreground'}`}>
+                    <span className={`font-semibold ${s.capacity.available <= 5 ? 'text-danger' : 'text-foreground'}`}>
                       {s.capacity.available}/{s.capacity.total}
-                      {s.capacity.available <= 5 && " — Almost Full!"}
+                      {s.capacity.available <= 5 && " · Almost Full"}
                     </span>
                   </div>
-                  <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                  <div className="h-[5px] bg-muted rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${occupancy > 90 ? 'bg-danger' : occupancy > 60 ? 'bg-warning' : 'bg-success'}`}
+                      className={`h-full rounded-full transition-all duration-500 ${occupancy > 90 ? 'bg-danger' : occupancy > 60 ? 'bg-warning' : 'bg-success'}`}
                       style={{ width: `${occupancy}%` }}
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-1.5 flex-wrap">
                   {s.petFriendly ? (
-                    <Badge variant="outline" className="text-xs font-bold border-foreground text-foreground">🐾 Pet Friendly</Badge>
+                    <Badge variant="outline" className="text-[11px] font-semibold border-primary/30 text-primary rounded-lg h-[22px]">
+                      🐾 Pet Friendly
+                    </Badge>
                   ) : (
-                    <Badge variant="outline" className="text-xs text-muted-foreground border-border">No Pets</Badge>
+                    <Badge variant="outline" className="text-[11px] text-muted-foreground border-border rounded-lg h-[22px]">
+                      No Pets
+                    </Badge>
                   )}
-                  <div className="flex flex-wrap gap-1">
-                    {s.facilities.map((f, i) => (
-                      <span key={i} className="text-xs py-0.5 px-2 bg-secondary text-muted-foreground rounded-full">{f}</span>
-                    ))}
-                  </div>
+                  {s.facilities.map((f, i) => (
+                    <span key={i} className="text-[11px] py-[2px] px-2 bg-muted text-muted-foreground rounded-lg font-medium">{f}</span>
+                  ))}
                 </div>
 
-                <div className="flex space-x-2 pt-1">
+                <div className="flex gap-2 pt-0.5">
                   <Button
                     onClick={() => handleReserve(s.id, s.name)}
                     disabled={isReserved || reserving === s.id || s.capacity.available === 0}
                     variant={isReserved ? "outline" : "default"}
-                    className="flex-1 h-11 rounded-xl font-bold text-sm"
+                    className="flex-1 h-11 rounded-xl font-semibold text-[13px] shadow-apple active:scale-[0.98] transition-transform"
                   >
                     {reserving === s.id ? (
-                      <><MapPin className="h-4 w-4 mr-1 animate-pulse" /> Reserving...</>
+                      <><MapPin className="h-3.5 w-3.5 mr-1 animate-pulse" /> Reserving...</>
                     ) : isReserved ? (
                       "✓ Reserved"
                     ) : (
-                      <><MapPin className="h-4 w-4 mr-1" /> Reserve Spot</>
+                      <><MapPin className="h-3.5 w-3.5 mr-1" /> Reserve Spot</>
                     )}
                   </Button>
                   <Button
                     onClick={() => handleNavigate(s.name, s.address)}
                     variant="outline"
-                    className="h-11 rounded-xl font-bold text-sm px-4"
+                    size="icon"
+                    className="h-11 w-11 rounded-xl shrink-0"
                   >
                     <Navigation className="h-4 w-4" />
                   </Button>

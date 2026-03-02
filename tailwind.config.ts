@@ -20,6 +20,7 @@ export default {
     extend: {
       fontFamily: {
         logo: ["Montserrat", "sans-serif"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -79,9 +80,11 @@ export default {
         },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
+        '2xl': 'calc(var(--radius) + 4px)',
+        xl: 'var(--radius)',
+        lg: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) - 6px)',
+        sm: 'calc(var(--radius) - 8px)'
       },
       keyframes: {
         'accordion-down': {
@@ -94,13 +97,23 @@ export default {
         },
         'pulse-dot': {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-          '50%': { opacity: '0.5', transform: 'scale(1.2)' }
+          '50%': { opacity: '0.4', transform: 'scale(1.3)' }
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-6px)' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'pulse-dot': 'pulse-dot 2s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'float': 'float 3s ease-in-out infinite',
       },
     }
   },

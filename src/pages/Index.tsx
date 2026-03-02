@@ -59,44 +59,51 @@ const Index = () => {
     <Layout>
       {!isEmergencyMode ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="w-24 h-24 rounded-full bg-destructive/10 flex items-center justify-center mb-8">
-            <AlertCircle className="w-10 h-10 text-destructive" />
+          {/* Emergency icon with gradient ring */}
+          <div className="relative mb-8">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-danger/20 to-danger/5 flex items-center justify-center">
+              <AlertCircle className="w-10 h-10 text-danger" />
+            </div>
+            <div className="absolute -inset-2 rounded-full border-2 border-danger/20 animate-pulse-dot" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground mb-2">
+          <h2 className="text-[22px] font-bold text-foreground mb-2 tracking-tight">
             Emergency Evacuation
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-xs">
+          <p className="text-[15px] text-muted-foreground mb-10 max-w-[280px] leading-relaxed">
             Safely evacuate with your pet during emergencies
           </p>
           <Button
             onClick={startEmergencyMode}
-            variant="destructive"
-            className="rounded-xl h-14 px-10 w-full max-w-xs text-base font-bold"
+            className="rounded-2xl h-[52px] px-10 w-full max-w-[320px] text-[16px] font-semibold bg-danger hover:bg-danger/90 text-danger-foreground shadow-apple-lg active:scale-[0.98] transition-transform"
           >
             Activate Emergency Mode
           </Button>
         </div>
       ) : (
         <>
-          {/* Status Banner */}
-          <div className={`rounded-xl p-4 mb-2 flex items-center space-x-3 ${
+          {/* Status Banner — Glass */}
+          <div className={`glass-strong rounded-2xl p-4 flex items-center gap-3 ${
             isApproved 
-              ? "bg-success/10 border border-success/30" 
-              : "bg-warning/10 border border-warning/30"
+              ? "ring-1 ring-success/30" 
+              : "ring-1 ring-warning/30"
           }`}>
             {isApproved ? (
-              <CheckCircle2 className="h-6 w-6 text-success flex-shrink-0" />
+              <div className="w-9 h-9 rounded-full bg-success/12 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="h-5 w-5 text-success" />
+              </div>
             ) : (
-              <Loader2 className="h-6 w-6 text-warning animate-spin flex-shrink-0" />
+              <div className="w-9 h-9 rounded-full bg-warning/12 flex items-center justify-center shrink-0">
+                <Loader2 className="h-5 w-5 text-warning animate-spin" />
+              </div>
             )}
-            <div>
-              <p className={`font-bold text-sm ${isApproved ? "text-success" : "text-warning"}`}>
+            <div className="min-w-0">
+              <p className={`font-semibold text-[13px] ${isApproved ? "text-success" : "text-warning"}`}>
                 {isApproved ? "APPROVED — Proceed to Shelter" : "PENDING — Awaiting Approval"}
               </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-[12px] text-muted-foreground mt-0.5 leading-snug">
                 {isApproved 
                   ? "Your spot has been confirmed. Navigate now." 
-                  : "Verifying your registration and pet documents..."}
+                  : "Verifying registration and pet documents..."}
               </p>
             </div>
           </div>
