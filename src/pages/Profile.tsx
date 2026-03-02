@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { User, Settings, Bell, Shield, ChevronRight, ArrowLeft, FileCheck, Dog, Syringe, BadgeCheck } from "lucide-react";
+import { Settings, Bell, Shield, ChevronRight, ArrowLeft, FileCheck, Dog, Syringe, BadgeCheck } from "lucide-react";
+import userProfileImg from "@/assets/user-profile.png";
+import dogProfileImg from "@/assets/dog-profile.png";
 
 const documents = [
   { name: "Rabies Vaccination Certificate", status: "Verified", date: "2025-08-15", icon: Syringe },
@@ -75,12 +77,11 @@ const Profile = () => {
         <div className="flex items-center gap-4">
           <div className="relative">
             <Avatar className="h-[72px] w-[72px] ring-2 ring-border">
-              <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/5 text-primary text-xl font-bold">
-                <User className="h-7 w-7" />
-              </AvatarFallback>
+              <AvatarImage src={userProfileImg} alt="John Doe" className="object-cover" />
+              <AvatarFallback className="bg-muted text-muted-foreground text-xl font-bold">JD</AvatarFallback>
             </Avatar>
-            <div className="absolute -bottom-0.5 -right-0.5 w-8 h-8 rounded-full bg-muted ring-2 ring-card flex items-center justify-center">
-              <Dog className="h-4 w-4 text-foreground" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-8 h-8 rounded-full ring-2 ring-card overflow-hidden">
+              <img src={dogProfileImg} alt="Buddy" className="w-full h-full object-cover" />
             </div>
           </div>
           <div>

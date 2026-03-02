@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dog } from "lucide-react";
+import dogProfileImg from "@/assets/dog-profile.png";
 
 interface PetProfileProps {
   name: string;
@@ -15,9 +15,11 @@ const PetProfile: React.FC<PetProfileProps> = ({ name, breed, age, specialNeeds 
     <Card className="glass-strong rounded-2xl border-0 shadow-apple overflow-hidden">
       <CardContent className="p-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-[52px] h-[52px] rounded-[14px] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-            <Dog className="w-6 h-6 text-primary" />
-          </div>
+          <img
+            src={dogProfileImg}
+            alt={name}
+            className="w-[52px] h-[52px] rounded-[14px] object-cover"
+          />
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-[17px] text-foreground leading-tight">{name}</h3>
             <p className="text-[13px] text-muted-foreground mt-0.5">
